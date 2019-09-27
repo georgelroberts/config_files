@@ -144,7 +144,7 @@ if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 # for VIM and TMUX
 
 alias default='cd ~/Desktop/imengine_uk/george; py37'
-alias release='cd ~/Desktop/imengine_uk/george; py27; cd ~/Documents/repo_code_testing/imengine_uk'
+alias release='cd ~/Desktop/imengine_uk/george; py37; cd ~/Documents/repo_code_testing/imengine_uk'
 alias py27='source /home/george/Desktop/py27/bin/activate'
 alias py37='source /home/george/Desktop/py37/bin/activate'
 alias cloud='ssh -i ~/.ssh/id_rsa george.roberts@35.201.130.217'
@@ -156,6 +156,9 @@ alias tmux='tmux -2'  # for 256color
 alias tmux='tmux -u'  # to get rid of unicode rendering problem
 alias ensemble_cloud_copy="rsync -a -v --ignore-existing george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ensembling/ ~/Desktop/imengine_uk/george/ensembling/; rsync -a -v george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ensembling/scores/all_scores.pkl ~/Desktop/imengine_uk/george/ensembling/scores/all_scores.pkl; rsync -av -e ssh --exclude '*.png' --exclude '*.pkl' --exclude '*.db' --exclude '*BACKUP' --exclude '*.log' george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ ~/Desktop/imengine_uk/george/cloud"
 alias all_scores_override='rsync -a -v ~/Desktop/imengine_uk/george/ensembling/scores/all_scores.pkl george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ensembling/scores/all_scores.pkl'
+alias ..='cd ..'
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
 
 export TERM=xterm-256color
 
@@ -166,3 +169,5 @@ bind '"\e0A": history-search-backward'
 bind '"\e0A": history-search-forward'
 
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
