@@ -1,3 +1,4 @@
+# export BASH_CONF="bashrc"
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -96,42 +97,6 @@ alias l='ls -CF'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-# added by Anaconda2 5.3.0 installer
-# >>> conda init >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$(CONDA_REPORT_ERRORS=false '/home/george/anaconda2/bin/conda' shell.bash hook 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    \eval "$__conda_setup"
-else
-    if [ -f "/home/george/anaconda2/etc/profile.d/conda.sh" ]; then
-        . "/home/george/anaconda2/etc/profile.d/conda.sh"
-        CONDA_CHANGEPS1=false conda activate base
-    else
-        \export PATH="/home/george/anaconda2/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda init <<<
-
 # George added SSH stuff:
 if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 	  eval `ssh-agent`
@@ -140,22 +105,25 @@ if [ ! -S ~/.ssh/ssh_auth_sock ]; then
     export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
     ssh-add -l > /dev/null || ssh-add
 
+# Bash completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+   . $(brew --prefix)/etc/bash_completion
+fi
+
 # Set correct term for tmux so solarized theme works in vim
 # for VIM and TMUX
 
-alias default='cd ~/Desktop/imengine_uk/george; py37'
-alias release='cd ~/Desktop/imengine_uk/george; py37; cd ~/Documents/repo_code_testing/imengine_uk'
-alias py27='source /home/george/Desktop/py27/bin/activate'
-alias py37='source /home/george/Desktop/py37/bin/activate'
-alias cloud='ssh -i ~/.ssh/id_rsa george.roberts@35.201.130.217'
-alias gitp='git push origin dev_george'
+alias default='cd ~/Documents/innovationproject/autocorrection; py38'
+alias py38='source ~/Documents/.env/bin/activate'
+alias cloud='ssh -i ~/.ssh/id_rsa typewise@51.103.149.20'
+# alias gitp='git push origin '
 alias gitl='git log --pretty=format:"%C(yellow)%h %Cred%ad%Cred%d %Creset%s%Cblue [%cn]" --decorate --date=short --graph --all'
 alias gitlf='git log --pretty=format:"%C(yellow)%h %Cred%ad%Cred%d %Creset%s%Cblue [%cn]" --decorate --date=short --all --name-only'
 
 alias tmux='tmux -2'  # for 256color
 alias tmux='tmux -u'  # to get rid of unicode rendering problem
-alias ensemble_cloud_copy="rsync -a -v --ignore-existing george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ensembling/ ~/Desktop/imengine_uk/george/ensembling/; rsync -a -v george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ensembling/scores/all_scores.pkl ~/Desktop/imengine_uk/george/ensembling/scores/all_scores.pkl; rsync -av -e ssh --exclude '*.png' --exclude '*.pkl' --exclude '*.db' --exclude '*BACKUP' --exclude '*.log' george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ ~/Desktop/imengine_uk/george/cloud"
-alias all_scores_override='rsync -a -v ~/Desktop/imengine_uk/george/ensembling/scores/all_scores.pkl george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ensembling/scores/all_scores.pkl'
+# alias ensemble_cloud_copy="rsync -a -v --ignore-existing george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ensembling/ ~/Desktop/imengine_uk/george/ensembling/; rsync -a -v george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ensembling/scores/all_scores.pkl ~/Desktop/imengine_uk/george/ensembling/scores/all_scores.pkl; rsync -av -e ssh --exclude '*.png' --exclude '*.pkl' --exclude '*.db' --exclude '*BACKUP' --exclude '*.log' george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ ~/Desktop/imengine_uk/george/cloud"
+# alias all_scores_override='rsync -a -v ~/Desktop/imengine_uk/george/ensembling/scores/all_scores.pkl george.roberts@35.201.130.217:/home/george.roberts/imengine_uk/george/ensembling/scores/all_scores.pkl'
 alias ..='cd ..'
 alias ..2='cd ../..'
 alias ..3='cd ../../..'

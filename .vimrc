@@ -23,28 +23,13 @@ Plugin 'ntpeters/vim-better-whitespace'
 
 Plugin 'christoomey/vim-tmux-navigator'
 
-Plugin 'ludovicchabant/vim-gutentags'
-
-Plugin 'majutsushi/tagbar'
-
 Plugin 'Yggdroot/indentLine'
 
 Plugin 'tomtom/tcomment_vim'
 
-Plugin 'mbbill/undotree'
-
-" Correct syntax highlighting
-Plugin 'vim-python/python-syntax'
-
-Plugin 'cohama/lexima.vim'
-
-Plugin 'elzr/vim-json'
-
 Plugin 'easymotion/vim-easymotion'
 
 Plugin 'kshenoy/vim-signature'
-
-Plugin 'kien/ctrlp.vim'
 
 call vundle#end()
 
@@ -61,7 +46,7 @@ set belloff+=ctrlg
 let g:mucomplete#enable_auto_at_startup = 1
 
 set cursorline
-set hlsearch
+" set hlsearch
 set incsearch
 
 set showcmd
@@ -92,6 +77,9 @@ let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>w <Plug>(easymotion-w)
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
 
 " move to beginning/end of line
 nnoremap B ^
