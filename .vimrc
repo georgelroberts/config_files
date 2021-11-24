@@ -1,49 +1,66 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-call vundle#begin()
+set rtp+=~/.fzf
 
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 " "filesystem
-" Plugin 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
+Plug 'preservim/tagbar'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'Yggdroot/LeaderF'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'zivyangll/git-blame.vim'
+Plug 'vim-test/vim-test'
 
 ""code folding
-Plugin 'kalekundert/vim-coiled-snake'
+" Plug 'kalekundert/vim-coiled-snake'
+" Plug 'pseewald/vim-anyfold'
+" Plug 'tmhedberg/simpylfold'
 
-" Plugin 'dracula/vim'
-Plugin 'crusoexia/vim-monokai'
-" Plugin 'ErichDonGubler/vim-sublime-monokai'
+" Plug 'dracula/vim'
+Plug 'crusoexia/vim-monokai'
+" Plug 'ErichDonGubler/vim-sublime-monokai'
 
-Plugin 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 
 " Remove whitespace with :StripWhitespace
-Plugin 'ntpeters/vim-better-whitespace'
+Plug 'ntpeters/vim-better-whitespace'
 
-Plugin 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 
-Plugin 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 
-Plugin 'tomtom/tcomment_vim'
+Plug 'tomtom/tcomment_vim'
 
-Plugin 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 
-Plugin 'kshenoy/vim-signature'
+Plug 'kshenoy/vim-signature'
 
-call vundle#end()
+Plug 'ajh17/VimCompletesMe'
 
-filetype plugin indent on    " enables filetype detection
+Plug 'ludovicchabant/vim-gutentags'
+
+Plug 'mbbill/undotree'
+
+call plug#end()
+
 syntax on
 
 " Syntax highlighting
 let g:python_highlight_all = 1
 
-set completeopt-=preview
-set completeopt+=menuone,noselect
-set shortmess+=c
-set belloff+=ctrlg
-let g:mucomplete#enable_auto_at_startup = 1
+nnoremap <C-n> :NERDTreeToggle<CR>
+let g:NERDTreeLimitedSyntax = 1
+
+
+" set completeopt-=preview
+" set completeopt+=menuone,noselect
+" set shortmess+=c
+" set belloff+=ctrlg
+" let g:mucomplete#enable_auto_at_startup = 1
 
 set cursorline
 " set hlsearch
@@ -53,33 +70,64 @@ set showcmd
 let mapleader=','
 " turn off search highlight
 nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader>m :syntax sync fromstart<CR>
 
 " PDB remap
 nnoremap <leader>p obreakpoint()<Esc>
 
-" ctrlp
-let g:ctrlp_user_command = ['.git/', 'git ls-files --cached --others --exclude-standard %s']
-let g:ctrlp_custom_ignore = 'py27/'
+" " ctrlp
+" let g:ctrlp_user_command = ['.git/', 'git ls-files --cached --others --exclude-standard %s']
+" let g:ctrlp_custom_ignore = 'py27/'
 
 let g:SimpylFold_docstring_preview = 1
 
 " Remap tagbar
 nmap <F4> :TagbarToggle<CR>
+nmap <leader>a :TagbarToggle<CR>
 let g:tagbar_sort = -1
 let g:tagbar_autofocus = 1
-let g:tagbar_autoclose = 0
+let g:tagbar_autoclose = 1
 let g:tagbar_compact = 1
-let g:tagbar_show_linenumbers = 0
+let g:tagbar_show_linenumbers = 1
+" let g:tagbar_autopreview = 1
 
-set updatetime=500
+set updatetime=1000
 
 let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>w <Plug>(easymotion-w)
 " <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+map  <Leader>s <Plug>(easymotion-bd-f)
+nmap <Leader>s <Plug>(easymotion-overwin-f)
+
+" Git blame show
+nnoremap <Leader>b :<C-u>call gitblame#echo()<CR>
+
+let g:fzf_preview_window = ['right:50%:hidden', 'ctrl-/']
+
+" Whole file searc
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fg :GFiles<CR>
+
+" Term search
+nnoremap <leader>fcw :BLines<CR>
+nnoremap <leader>fcd :BLines def <CR>
+nnoremap <leader>fcc :BLines class <CR>
+nnoremap <leader>fcuw :BLines <C-R><C-W><CR>
+nnoremap <leader>fcud :BLines def <C-R><C-W><CR>
+nnoremap <leader>fcuc :BLines class <C-R><C-W><CR>
+
+" In project
+nnoremap <leader>fpw :Ag<CR>
+nnoremap <leader>fpd :Ag<Space>def<Space><CR>
+nnoremap <leader>fpc :Ag<Space>class<Space><CR>
+nnoremap <leader>fpuw :Ag <C-R><C-W><CR>
+nnoremap <leader>fpud :Ag def <C-R><C-W><CR>
+nnoremap <leader>fpuc :Ag class <C-R><C-W><CR>
+
+nmap <leader>tn :TestNearest<CR>
+nmap <leader>tf :TestFile<CR>
 
 " move to beginning/end of line
 nnoremap B ^
@@ -132,8 +180,20 @@ au BufNewFile *.py 0r ~/.vim/skeleton.py
 
 "Folding based on indentation:
 " autocmd FileType python set foldmethod=indent
+autocmd FileType python set foldmethod=syntax
 "use space to open folds
 nnoremap <space> za
+" autocmd Filetype python AnyFoldActivate               " activate for all filetypes
+" set foldlevel=0  " close all folds
+" let g:anyfold_fold_display=1
+" let g:anyfold_motion=0
+" let g:anyfold_fold_toplevel=0
+" let g:anyfold_identify_comments=2
+" let g:SimpylFold_docstring_preview = 1" Preview docstring in fold text	0
+" g:SimpylFold_fold_import " Fold imports	1
+" b:SimpylFold_fold_import " Fold imports (buffer local)	1
+" let g:SimpylFold_fold_blank=1	" Fold trailing blank lines	0
+" let b:SimpylFold_fold_blank=1	" Fold trailing blanks (buffer)	0
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -151,8 +211,6 @@ if has("persistent_undo")
 	set undofile
 endif
 let g:undotree_SetFocusWhenToggle = 1
-
-nnoremap <leader>z Gzz
 
 " Highlight 'self'
 augroup python
